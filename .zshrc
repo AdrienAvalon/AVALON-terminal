@@ -8,8 +8,6 @@ export ZSH="/root/.oh-my-zsh"
 ZSH_THEME="obraun"
 ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE="fg=#ff00ff,bg=cyan,bold,underline"
 ZSH_AUTOSUGGEST_STRATEGY=(history completion)
-ZSH_TMUX_AUTOCONNECT="true"
-ZSH_TMUX_AUTOSTART="true"
 
 plugins=(
 git
