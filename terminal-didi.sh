@@ -10,9 +10,9 @@
 echo "Script d'installation du terminal de DIDI"
 echo "-----------------------------------------"
 echo "Mise à jour du système d'exploitation"
-apt update & apt upgrade
+apt update && apt upgrade
 echo "Installation des dépendance nécessaire"
-apt install zsh -y & apt install tmux -y & apt install curl -y
+apt install zsh -y && apt install tmux -y && apt install curl -y
 
 sh -c "$(curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
 git clone https://github.com/zsh-users/zsh-autosuggestions ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-autosuggestions
