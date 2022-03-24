@@ -2,7 +2,7 @@
 # Script d'installation du terminal-didi
 #
 # Auteur: Adrien CROS
-# Version: 1.0
+# Version: 1.1
 #
 # Utilisation: ./terminal-didi.sh
 # -----------------------------------------------------------------------------
