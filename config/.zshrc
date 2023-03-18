@@ -25,7 +25,7 @@ source $ZSH/oh-my-zsh.sh
 
 # Lancement TMUX en même temps que ZSH
 if [ -z "$TMUX" ]; then
-    tmux attach -t $SUDO_USER || tmux new -s $SUDO_USER
+    tmux attach -t $SUDO_USER || tmux -u new -s $SUDO_USER
 fi
 
 # Affichage du MOTD
