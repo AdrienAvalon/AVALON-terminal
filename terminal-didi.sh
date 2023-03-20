@@ -1,12 +1,14 @@
 #!/bin/bash
+
 # -----------------------------------------------------------------------------
 # Script d'installation du terminal-didi
 #
 # Auteur: Adrien CROS
-# Version: 1.5
+# Version: 1.6
 #
 # Utilisation: ./terminal-didi.sh
 # -----------------------------------------------------------------------------
+
 set -e
 
 # Fonction pour logger les messages avec un timestamp
@@ -85,11 +87,24 @@ add_plugin_to_zshrc() {
     fi
 }
 
+# Sauvegarde les fichiers de configuration existants
+backup_existing_config() {
+    file_path=$1
+    backup_path="${file_path}.bak"
+    
+    if [ -f "$file_path" ]; then
+        log "Sauvegarde du fichier de configuration existant : $file_path"
+        cp "$file_path" "$backup_path"
+    fi
+}
+
 # Copie les fichiers de configuration
 copy_config_files() {
     log "-----------------------------------------"
     log "Copie des fichiers de configuration" 
     log "-----------------------------------------"
+    backup_existing_config ~/.tmux.conf
+    backup_existing_config ~/.zshrc
     cp $tmux_config_path ~/.tmux.conf
     cp $zsh_config_path ~/.zshrc
 }
@@ -112,6 +127,9 @@ finish_installation() {
 
 tmux_config_path="config/.tmux.conf"
 zsh_config_path="config/.zshrc"
+autosuggestions_url="https://github.com/zsh-users/zsh-autosuggestions"
+syntax_highlighting_url="https://github.com/zsh-users/zsh-syntax-highlighting.git"
+completions_url="https://github.com/zsh-users/zsh-completions"
 
 check_root
 check_command git
@@ -123,9 +141,9 @@ install_dependencies
 install_oh_my_zsh
 
 zsh_custom=${ZSH_CUSTOM:-~/.oh-my-zsh/custom}
-install_plugin "https://github.com/zsh-users/zsh-autosuggestions" "$zsh_custom/plugins/zsh-autosuggestions"
-install_plugin "https://github.com/zsh-users/zsh-syntax-highlighting.git" "$zsh_custom/plugins/zsh-syntax-highlighting"
-install_plugin "https://github.com/zsh-users/zsh-completions" "$zsh_custom/plugins/zsh-completions"
+install_plugin "$autosuggestions_url" "$zsh_custom/plugins/zsh-autosuggestions"
+install_plugin "$syntax_highlighting_url" "$zsh_custom/plugins/zsh-syntax-highlighting"
+install_plugin "$completions_url" "$zsh_custom/plugins/zsh-completions"
 
 add_plugin_to_zshrc "zsh-autosuggestions"
 add_plugin_to_zshrc "zsh-syntax-highlighting"
