@@ -3,7 +3,7 @@
 # Script d'installation du terminal-didi
 #
 # Auteur: Adrien CROS
-# Version: 1.3
+# Version: 1.4
 #
 # Utilisation: ./terminal-didi.sh
 # -----------------------------------------------------------------------------
@@ -19,6 +19,10 @@ check_root() {
         log "Ce script doit être exécuté en tant que root."
         exit 1
     fi
+}
+
+check_command() {
+    command -v $1 >/dev/null 2>&1 || { log "La commande $1 est requise, mais elle n'est pas installée.  Aborting." >&2; exit 1; }
 }
 
 update_system() {
@@ -43,14 +47,16 @@ install_oh_my_zsh() {
     sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
 }
 
-install_plugins() {
-    log "-----------------------------------------"
-    log "Installation des plugins omz" 
-    log "-----------------------------------------"
-    zsh_custom=${ZSH_CUSTOM:-~/.oh-my-zsh/custom}
-    git clone https://github.com/zsh-users/zsh-autosuggestions $zsh_custom/plugins/zsh-autosuggestions 
-    git clone https://github.com/zsh-users/zsh-syntax-highlighting.git $zsh_custom/plugins/zsh-syntax-highlighting 
-    git clone https://github.com/zsh-users/zsh-completions $zsh_custom/plugins/zsh-completions
+install_plugin() {
+    repo_url=$1
+    plugin_dir=$2
+
+    if [ ! -d "$plugin_dir" ]; then
+        log "Installation du plugin $(basename $plugin_dir)"
+        git clone $repo_url $plugin_dir
+    else
+        log "Le plugin $(basename $plugin_dir) est déjà installé"
+    fi
 }
 
 copy_config_files() {
@@ -68,9 +74,17 @@ finish_installation() {
 }
 
 check_root
+check_command git
+check_command curl
+
 update_system
 install_dependencies
 install_oh_my_zsh
-install_plugins
+
+zsh_custom=${ZSH_CUSTOM:-~/.oh-my-zsh/custom}
+install_plugin "https://github.com/zsh-users/zsh-autosuggestions" "$zsh_custom/plugins/zsh-autosuggestions"
+install_plugin "https://github.com/zsh-users/zsh-syntax-highlighting.git" "$zsh_custom/plugins/zsh-syntax-highlighting"
+install_plugin "https://github.com/zsh-users/zsh-completions" "$zsh_custom/plugins/zsh-completions"
+
 copy_config_files
 finish_installation
