@@ -59,7 +59,7 @@ install_oh_my_zsh() {
     log "Installation d'Oh My ZSH" 
     log "-----------------------------------------"
     export RUNZSH="no"
-    sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
+    sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" "" --unattended
 }
 
 # Installe un plugin Oh My Zsh
