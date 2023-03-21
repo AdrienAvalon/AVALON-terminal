@@ -115,7 +115,7 @@ change_default_shell() {
     log "Changement du shell par défaut en Zsh" 
     log "-----------------------------------------"
     user=$(whoami)
-    sudo chsh -s $(which zsh) $user
+    chsh -s $(which zsh) $user
 }
 
 # Termine l'installation
